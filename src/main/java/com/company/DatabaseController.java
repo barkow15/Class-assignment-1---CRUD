@@ -1,6 +1,7 @@
 package com.company;
 
 import java.sql.*;
+import java.util.Scanner;
 
 public class DatabaseController implements DatabaseInterface{
 
@@ -36,12 +37,33 @@ public class DatabaseController implements DatabaseInterface{
 
     public boolean sletMoebel(int pID) {
 
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Du ønsker at slette en kolonne");
+        System.out.println("Skriv først navnet på ønskede tabel, hvorfra kolonnen skal slettes:");
+
+        String s = sc.next();
+
+
+        System.out.println("Skriv navnet på kolonnen som ønskes slettet ");
+
+        String a = sc.next();
+        String sql = "ALTER TABLE " + s + " DROP COLUMN " + a;
+        int rs = this.executeSql(sql);
         return true;
     }
 
     public boolean redigerMoebel(int pID){
 
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Indtast ny katagori til tabellen mødel: ");
+
+        String s = sc.next();
+        String sql = "ALTER TABLE moebler ADD " + s + " CHAR(20)";
+        int rs = this.executeSql(sql);
         return true;
+
     }
 
     public Moebel hentMoebel(int id){
