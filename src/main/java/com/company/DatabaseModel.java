@@ -14,10 +14,6 @@ public class DatabaseModel{
     private Connection conn;
     private boolean debug           = false;
 
-    Scanner sc = new Scanner(System.in);
-
-    Menu menu = new Menu();
-
     public DatabaseModel() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -32,78 +28,32 @@ public class DatabaseModel{
 
         // Forbind til databasen og set conn attributten
         this.conn = DriverManager.getConnection(conUrl, this.dbUser, this.dbPass);
-
-
     }
     
     
-    public boolean opretMoebel(/*String moebelNavn, int moebelPris, int lIDproduktLokation*/) {
+    public boolean opretMoebel(String moebelNavn, String moebelPris, String lIDproduktLokation) {
+        boolean status = false;
+        String sql = "INSERT INTO moebler (Moebelnavn, Moebelpris, lIDProduktlokation ) VALUES " + "('" + moebelNavn + "', '" + moebelPris + "', '" + lIDproduktLokation + "'" + "); ";
 
-        //System.out.println("Skriv din tilføjelse: Moebelnavn, Moebelpris, lIDProduktlokation.");
-        System.out.println("Skriv først navnet på ny varer: ");
+        if(this.executeSql(sql) != -1){
+            status = true;
+        }else{
+            status = false;
+        }
 
-        String s = sc.next();
-
-        System.out.println("Skriv pris på ny varer: ");
-
-        String a = sc.next();
-
-        System.out.println("Skriv lokation: ");
-
-        String b = sc.next();
-
-        String sql = "INSERT INTO moebler (Moebelnavn, Moebelpris, lIDProduktlokation ) VALUES " + "('" + s + "', '" + a + "', '" + b + "'" + "); ";
-        int rs = this.executeSql(sql);
-
-        return true;
-
+        return status;
     }
 
-    public boolean sletMoebel(int pID) {
-
-        System.out.println("Du ønsker at slette en kolonne");
-        System.out.println("Skriv først navnet på ønskede tabel, hvorfra rækken skal slettes:");
-
-        String s = sc.next();
-
-
-        System.out.println("Skriv navnet på katagori som ønskes slettet ");
-
-        String a = sc.next();
-
-        System.out.println("Skriv ud fra ID hvilket produkt der skal slettes: ");
-
-        String b = sc.next();
-        String sql = "DELETE FROM " + s + " WHERE " + a + " = " + b + ";";
+    public boolean sletRaekke(String tableName, String catName, String pID) {
+        String sql = "DELETE FROM " + tableName + " WHERE " + catName + " = " + pID + ";";
         int rs = this.executeSql(sql);
         return true;
     }
 
-    public boolean redigerMoebel(int pID){
-
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Skriv hvilken tabel der skal ændres i: ");
-
-        String s = sc.next();
-
-        System.out.println("Skriv hvad der skal ændres (moebelNavn, moebelPris, lIDproduktLokation); ");
-
-        String a = sc.next();
-
-        System.out.println("Skriv hvad den nye værdi");
-
-        String b = sc.next();
-
-        System.out.println("Vælg ud fra ID hvilken række der skal ændres");
-
-        String c = sc.next();
-
-
-        String sql = "UPDATE " + s + " SET " + a + " = '" + b + "' WHERE pID = " + c + ";";
+    public boolean redigerRaekke(String tableName, String colName, String updateValue, String id){
+        String sql = "UPDATE " + tableName + " SET " + colName + " = '" + updateValue + "' WHERE pID = " + id + ";";
         int rs = this.executeSql(sql);
         return true;
-
-
     }
 
     public Moebel hentMoebel(int id){
@@ -162,25 +112,8 @@ public class DatabaseModel{
             System.err.println("hentLokationer" +  e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
-        finally { this.closeConnection(rs);  }
         if(this.debug == true){ System.out.println("Returning data"); }
         return(lokationer);
-    }
-
-    public String udskrivLokationer() {
-        String lokationerString = "--- Lokationer ----\n";
-        ArrayList<Lokation> lokationerList = this.hentLokationer();
-
-        for(int i = 0; i < lokationerList.size(); i++){
-            Lokation l = lokationerList.get(i);
-
-            lokationerString += "ID: " +      l.getId() +       "\n";
-            lokationerString += "Navn: " +    l.getNavn() +     "\n";
-            lokationerString += "Adresse: " + l.getAdresse() +  "\n";
-            lokationerString += "\n";
-        }
-
-        return lokationerString;
     }
 
     private int executeSql(String sql)

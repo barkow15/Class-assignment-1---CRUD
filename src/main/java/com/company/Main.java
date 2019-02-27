@@ -10,10 +10,7 @@ public class Main {
         cc.printTxtGreen("text").printTxtYellow("Ok yay").printTxtUnderline("---- OMG ----").print(true);
 
         Menu menu = new Menu();
-
         menu.welcome();
-
-        
 
     }
 }
