@@ -11,7 +11,8 @@ public class Main {
         DatabaseController d = new DatabaseController();
 
         //System.out.println(d.hentMoebel(2).getNavn());
-          System.out.println(d.sletMoebel(2));
+        //System.out.println(d.sletMoebel(2));
         //System.out.println(d.redigerMoebel(2));
+        System.out.println(d.opretMoebel());
     }
 }

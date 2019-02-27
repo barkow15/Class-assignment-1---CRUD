@@ -3,6 +3,7 @@ package com.company;
 import java.sql.*;
 import java.util.Scanner;
 
+
 public class DatabaseController implements DatabaseInterface{
 
     private final String dbName     = "windata";
@@ -12,6 +13,8 @@ public class DatabaseController implements DatabaseInterface{
     private final String dbUser     = "windata";
     private Connection conn;
     private boolean debug           = false;
+
+    Scanner sc = new Scanner(System.in);
 
     public DatabaseController() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -30,14 +33,31 @@ public class DatabaseController implements DatabaseInterface{
     }
     
     
-    public boolean opretMoebel(String moebelNavn, int moebelPris, int lIDproduktLokation) {
+    public boolean opretMoebel(/*String moebelNavn, int moebelPris, int lIDproduktLokation*/) {
 
+        //System.out.println("Skriv din tilføjelse: Moebelnavn, Moebelpris, lIDProduktlokation.");
+        System.out.println("Skriv først navnet på ny varer: ");
+
+        String s = sc.next();
+
+        System.out.println("Skriv pris på ny varer: ");
+
+        String a = sc.next();
+
+        System.out.println("Skriv lokation: ");
+
+        String b = sc.next();
+
+
+
+        String sql = "INSERT INTO moebler (Moebelnavn, Moebelpris, lIDProduktlokation ) VALUES " + "('" + s + "', '" + a + "', '" + b + "'" + "); ";
+        int rs = this.executeSql(sql);
         return true;
+
+
     }
 
     public boolean sletMoebel(int pID) {
-
-        Scanner sc = new Scanner(System.in);
 
         System.out.println("Du ønsker at slette en kolonne");
         System.out.println("Skriv først navnet på ønskede tabel, hvorfra kolonnen skal slettes:");
@@ -121,6 +141,7 @@ public class DatabaseController implements DatabaseInterface{
             {
                 conn.close();
                 if(this.debug) System.out.println("DB CONNECTION CLOSED");
+
             }
 
         }
