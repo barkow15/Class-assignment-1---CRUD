@@ -91,16 +91,16 @@ public class DatabaseController implements DatabaseInterface{
 
         String a = sc.next();
 
-        System.out.println("Skriv hvad den nye værdi skal være, ud fra ID");
+        System.out.println("Skriv hvad den nye værdi");
 
         String b = sc.next();
 
-
+        System.out.println("Vælg ud fra ID hvilken række der skal ændres");
 
         String c = sc.next();
 
 
-        String sql = "UPDATE " + s + " SET " + a + " = " + b + " WHERE " + c + ";";
+        String sql = "UPDATE " + s + " SET " + a + " = '" + b + "' WHERE pID = " + c + ";";
         int rs = this.executeSql(sql);
         return true;
 
