@@ -1,9 +1,10 @@
 package com.company;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class DatabaseController implements DatabaseInterface{
+public class DatabaseController{
 
 
 
@@ -132,12 +133,56 @@ public class DatabaseController implements DatabaseInterface{
             System.exit(0);
         }
         finally { this.closeConnection(rs);  }
-        System.out.println("Returning data");
+        if(this.debug == true){ System.out.println("Returning data"); }
         return(m);
     }
 
-    public Lokation hentlokation() {
-        return null;
+    public ArrayList<Lokation> hentLokationer() {
+        ResultSet   rs  = null;
+        String      sql = null;
+        sql = "SELECT * FROM lokationer";
+
+        rs = this.querySql(sql);
+        Moebel m = null;
+        ArrayList<Lokation> lokationer = new ArrayList();
+
+        try
+        {
+            while (rs.next())
+            {
+                lokationer.add(
+                    new Lokation(
+                        rs.getInt("lID"),
+                        rs.getString("lokationsNavn"),
+                        rs.getString("lokationsAdresse")
+                    )
+                );
+            }
+        }
+        catch(Exception e)
+        {
+            System.err.println("hentLokationer" +  e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        finally { this.closeConnection(rs);  }
+        if(this.debug == true){ System.out.println("Returning data"); }
+        return(lokationer);
+    }
+
+    public String udskrivLokationer() {
+        String lokationerString = "--- Lokationer ----\n";
+        ArrayList<Lokation> lokationerList = this.hentLokationer();
+
+        for(int i = 0; i < lokationerList.size(); i++){
+            Lokation l = lokationerList.get(i);
+
+            lokationerString += "ID: " +      l.getId() +       "\n";
+            lokationerString += "Navn: " +    l.getNavn() +     "\n";
+            lokationerString += "Adresse: " + l.getAdresse() +  "\n";
+            lokationerString += "\n";
+        }
+
+        return lokationerString;
     }
 
     private int executeSql(String sql)
