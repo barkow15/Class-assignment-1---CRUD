@@ -3,8 +3,9 @@ package com.company;
 import java.sql.*;
 import java.util.Scanner;
 
-
 public class DatabaseController implements DatabaseInterface{
+
+
 
     private final String dbName     = "windata";
     private final String dbHost     = "den1.mysql4.gear.host";
@@ -15,6 +16,8 @@ public class DatabaseController implements DatabaseInterface{
     private boolean debug           = false;
 
     Scanner sc = new Scanner(System.in);
+
+    Menu menu = new Menu();
 
     public DatabaseController() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -30,6 +33,8 @@ public class DatabaseController implements DatabaseInterface{
 
         // Forbind til databasen og set conn attributten
         this.conn = DriverManager.getConnection(conUrl, this.dbUser, this.dbPass);
+
+
     }
     
     
@@ -48,27 +53,29 @@ public class DatabaseController implements DatabaseInterface{
 
         String b = sc.next();
 
-
-
         String sql = "INSERT INTO moebler (Moebelnavn, Moebelpris, lIDProduktlokation ) VALUES " + "('" + s + "', '" + a + "', '" + b + "'" + "); ";
         int rs = this.executeSql(sql);
-        return true;
 
+        return true;
 
     }
 
     public boolean sletMoebel(int pID) {
 
         System.out.println("Du ønsker at slette en kolonne");
-        System.out.println("Skriv først navnet på ønskede tabel, hvorfra kolonnen skal slettes:");
+        System.out.println("Skriv først navnet på ønskede tabel, hvorfra rækken skal slettes:");
 
         String s = sc.next();
 
 
-        System.out.println("Skriv navnet på kolonnen som ønskes slettet ");
+        System.out.println("Skriv navnet på katagori som ønskes slettet ");
 
         String a = sc.next();
-        String sql = "ALTER TABLE " + s + " DROP COLUMN " + a;
+
+        System.out.println("Skriv ud fra ID hvilket produkt der skal slettes: ");
+
+        String b = sc.next();
+        String sql = "DELETE FROM " + s + " WHERE " + a + " = " + b + ";";
         int rs = this.executeSql(sql);
         return true;
     }
@@ -76,13 +83,27 @@ public class DatabaseController implements DatabaseInterface{
     public boolean redigerMoebel(int pID){
 
         Scanner sc = new Scanner(System.in);
-
-        System.out.println("Indtast ny katagori til tabellen mødel: ");
+        System.out.println("Skriv hvilken tabel der skal ændres i: ");
 
         String s = sc.next();
-        String sql = "ALTER TABLE moebler ADD " + s + " CHAR(20)";
+
+        System.out.println("Skriv hvad der skal ændres (moebelNavn, moebelPris, lIDproduktLokation); ");
+
+        String a = sc.next();
+
+        System.out.println("Skriv hvad den nye værdi skal være, ud fra ID");
+
+        String b = sc.next();
+
+
+
+        String c = sc.next();
+
+
+        String sql = "UPDATE " + s + " SET " + a + " = " + b + " WHERE " + c + ";";
         int rs = this.executeSql(sql);
         return true;
+
 
     }
 
