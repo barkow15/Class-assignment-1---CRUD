@@ -84,7 +84,6 @@ public class ConsoleColors {
         return this;
     }
 
-
     public ConsoleColors printTxtYellow(String txt) {
         txtToPrint.append(ANSI_YELLOW + txt + ANSI_RESET);
         return this;
@@ -99,5 +98,17 @@ public class ConsoleColors {
         txtToPrint.append(ANSI_UNDERLINE + txt + ANSI_RESET);
         return this;
     }
+
+    public ConsoleColors printTxtBlue(String txt){
+        txtToPrint.append(ANSI_BLUE + txt + ANSI_RESET);
+        return this;
+    }
+
+    public ConsoleColors printTxtPurple(String txt){
+        txtToPrint.append(ANSI_PURPLE + txt + ANSI_RESET);
+        return  this;
+    }
+
+
 
 }

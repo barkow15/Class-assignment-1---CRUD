@@ -9,13 +9,19 @@ public class Menu {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Velkommen til.");
+        ConsoleColors cc = new ConsoleColors();
+
+        System.out.println("Velkommen til");
 
         System.out.println("Vælg handling: ");
-        System.out.println("1. opret møbel");
-        System.out.println("2. rediger møbel");
-        System.out.println("3. slet møbel");
-        System.out.println("4. hent møbel");
+        cc.printTxtPurple("1. opret møbel").print(true);
+        cc.clearTxtBuffer();
+        cc.printTxtYellow("2. rediger møbel").print(true);
+        cc.clearTxtBuffer();
+        cc.printTxtRed("3. slet møbel").print(true);
+        cc.clearTxtBuffer();
+        cc.printTxtBlue("4. hent møbel").print(true);
+        cc.clearTxtBuffer();
         System.out.println("5. Exit");
 
         DatabaseController d;
