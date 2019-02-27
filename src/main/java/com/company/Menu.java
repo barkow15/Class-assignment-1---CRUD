@@ -24,17 +24,16 @@ public class Menu {
         cc.clearTxtBuffer();
         System.out.println("5. Exit");
 
-        DatabaseController d;
-        d = new DatabaseController();
+        MoebelController m = new MoebelController();
 
         int in = scanner.nextInt();
         switch (in){
 
-            case 1: d.opretMoebel();
+            case 1: m.opretMoebel();
                 break;
-            case 2: d.redigerMoebel(2);
+            case 2: m.redigerMoebel(2);
                 break;
-            case 3: d.sletMoebel(2);
+            case 3: m.sletMoebel(2);
                 break;
             case 4: System.out.println(d.hentMoebel(2).getNavn());
                 break;

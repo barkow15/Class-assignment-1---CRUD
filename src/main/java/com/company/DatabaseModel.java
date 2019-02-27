@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class DatabaseController{
+public class DatabaseModel{
 
     private final String dbName     = "windata";
     private final String dbHost     = "den1.mysql4.gear.host";
@@ -18,7 +18,7 @@ public class DatabaseController{
 
     Menu menu = new Menu();
 
-    public DatabaseController() throws ClassNotFoundException, SQLException {
+    public DatabaseModel() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
 
         // Lav conUrl tekststrengen
