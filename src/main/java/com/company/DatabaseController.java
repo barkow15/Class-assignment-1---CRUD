@@ -6,8 +6,6 @@ import java.util.Scanner;
 
 public class DatabaseController{
 
-
-
     private final String dbName     = "windata";
     private final String dbHost     = "den1.mysql4.gear.host";
     private final String dbPort     = "3306";
