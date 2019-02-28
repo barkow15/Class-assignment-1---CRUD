@@ -69,16 +69,12 @@ public class MoebelController {
 
         int c = sc.nextInt();
 
-
-
         Moebel m = dbModel.hentMoebel(c);
         System.out.println(
                 "-- Møbel med id " + c + " hentet\n" +
                 "Navn: " + m.getNavn() + "\n" +
                 "Pris: " + m.getPris() + "\n"
         );
-
-
 
     }
 

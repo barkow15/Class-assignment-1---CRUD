@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class DatabaseModel{
 
-    private final String dbName     = "windata";
+    private final String dbName     = "windata?useSSL=false";
     private final String dbHost     = "den1.mysql4.gear.host";
     private final String dbPort     = "3306";
     private final String dbPass     = "Bc250-rbRn!7";
@@ -70,7 +70,7 @@ public class DatabaseModel{
                     rs.getInt("pID"),
                     rs.getInt("moebelPris"),
                     rs.getString("moebelNavn"),
-                    new Lokation(rs.getInt("lIDproduktLokation"),"bla", "")
+                    new Lokation(rs.getInt("lIDproduktLokation"),"", "")
                 );
             }
         }
