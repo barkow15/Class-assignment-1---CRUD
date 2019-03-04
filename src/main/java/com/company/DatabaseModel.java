@@ -42,6 +42,24 @@ public class DatabaseModel{
 
         return status;
     }
+    public boolean opretCustomTabel(CustomTable ct){
+        boolean completionStatus = false;
+        String sql = "CREATE TABLE IF NOT EXISTS " + ct.getTableName() + " (";
+
+
+        sql +=  ct.getColumnNames().get(0) + " INT AUTO_INCREMENT," +
+                ct.getColumnNames().get(1) + " VARCHAR(100)," +
+                ct.getColumnNames().get(2) + " INT," +
+                ct.getColumnNames().get(3) + " INT,"
+                + " PRIMARY KEY (" + ct.getColumnNames().get(0) + "));";
+
+        if(this.executeSql(sql) != -1){
+            completionStatus = true;
+        }
+
+
+        return completionStatus;
+    }
 
     public boolean sletRaekke(String tableName, String catName, String pID) {
         String sql = "DELETE FROM " + tableName + " WHERE " + catName + " = " + pID + ";";
@@ -135,7 +153,7 @@ public class DatabaseModel{
 
             if(conn != null)
             {
-                conn.close();
+                //conn.close();
                 if(this.debug) System.out.println("DB CONNECTION CLOSED");
 
             }
@@ -176,7 +194,7 @@ public class DatabaseModel{
         return rs;
     }
 
-    private void closeConnection(ResultSet rs)
+    public void closeConnection(ResultSet rs)
     {
         try
         {
